@@ -1,28 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import rootReducer from './reducers'
-import App from './components/App'
-import { saveState, loadState } from './localStorage'
+import Root from './components/Root';
+import configureStore from './configureStore';
 
-
-const persistedState = loadState()
-const store = createStore(
-    rootReducer,
-    persistedState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
-
-store.subscribe(() => {
-    saveState({
-        todos: store.getState().todos
-    })
-})
+const store = configureStore()
 
 render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+    <Root store={store} />,
     document.getElementById('root')
 )
