@@ -4,15 +4,15 @@ import { v4 } from "node-uuid";
 const fakeDatabase = {
     todos: [{
         id: v4(),
-        text: 'hey',
+        text: 'todo 1',
         completed: true
     }, {
         id: v4(),
-        text: 'ho',
+        text: 'todo 2',
         completed: true
     }, {
         id: v4(),
-        text: 'let\'s go',
+        text: 'todo 3',
         completed: false
     }]
 }
