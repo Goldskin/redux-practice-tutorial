@@ -7,7 +7,6 @@ import React, { Component } from 'react'
 
 class VisibleTodoList extends Component {
     componentDidMount () {
-        console.log(this.props.filter);
         this.fetchData()
     }
 

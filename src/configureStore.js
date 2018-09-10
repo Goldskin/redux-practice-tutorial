@@ -1,45 +1,21 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers'
+import {createLogger} from 'redux-logger'
+import promise from 'redux-promise'
 
-const logger = store => next => action => {
-    console.groupCollapsed(action.type)
-    console.log('%c pre state ', 'background-color:gray;color:#fff;', store.getState())
-    console.log('%c action ', 'background-color:blue;color:#fff;', action)
-    const returnValue = next(action)
-    console.log('%c post state ', 'background-color:green;color:#fff;', store.getState())
-    console.groupEnd()
-    return returnValue
-}
-
-const promise = store => next => action => {
-    if (typeof action.then === 'function') {
-        return action.then(next)
-    }
-    return next(action)
-}
-
-const wrapDispatchWithMiddlewares = (store, middlewares) => {
-    middlewares.slice().reverse().forEach(middleware => {
-        store.dispatch = middleware(store)(store.dispatch)
-    });
-}
-
-
+const typicalMiddleware = store => next => action => next(action)
 
 const configureStore = () => {
-    const store = createStore(
-        rootReducer,
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-    const middlewares = [promise]
+    const middlewares = [promise, typicalMiddleware]
+    const argument = [rootReducer]
 
     if (process.env.NODE_ENV !== 'production') {
-        middlewares.push(logger)
+        middlewares.push(createLogger())
+        argument.push(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
     }
-    
-    wrapDispatchWithMiddlewares(store, middlewares)
 
-    return store
+    argument.push(applyMiddleware(...middlewares))
+    return createStore(...argument)
 }
 
 export default configureStore
