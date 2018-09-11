@@ -4,9 +4,13 @@ import {createLogger} from 'redux-logger'
 import promise from 'redux-promise'
 
 const typicalMiddleware = store => next => action => next(action)
+const thunk = store => next => action =>
+    typeof action === 'function' ? 
+        action(store.dispatch) :
+        next(action)
 
 const configureStore = () => {
-    const middlewares = [promise, typicalMiddleware]
+    const middlewares = [promise, typicalMiddleware, thunk]
     const argument = [rootReducer]
 
     if (process.env.NODE_ENV !== 'production') {
