@@ -4,7 +4,7 @@ import TodoList from '../components/TodoList'
 import { withRouter } from 'react-router-dom'
 import { getVisibleTodos, getIsFetching } from '../reducers'
 import React, { Component } from 'react'
-import Loading from '../components/laoding';
+import Loading from '../components/Loading';
 
 
 class VisibleTodoList extends Component {
