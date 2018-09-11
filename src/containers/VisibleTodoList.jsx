@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import { VisibilityFilters } from '../const'
 import TodoList from '../components/TodoList'
 import { withRouter } from 'react-router-dom'
 import { getVisibleTodos, getIsFetching } from '../reducers'
@@ -38,7 +39,7 @@ class VisibleTodoList extends Component {
 }
 
 const mapStateToProps = (state, { match }) => {
-    const filter = match.params.filter || actions.VisibilityFilters.SHOW_ALL
+    const filter = match.params.filter || VisibilityFilters.SHOW_ALL
     
     return {
         todos: getVisibleTodos(state, filter),

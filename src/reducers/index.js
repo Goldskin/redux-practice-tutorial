@@ -1,4 +1,4 @@
-import { VisibilityFilters } from '../actions'
+import { VisibilityFilters } from '../const'
 import { combineReducers } from 'redux';
 import byId, * as fromByid from './byId';
 import createList, * as fromList from './createList';

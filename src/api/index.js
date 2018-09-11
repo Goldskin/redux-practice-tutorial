@@ -1,4 +1,4 @@
-import { VisibilityFilters } from "../actions";
+import { VisibilityFilters } from "../const";
 import { v4 } from "node-uuid";
 
 const fakeDatabase = {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { VisibilityFilters } from '../actions'
+import { VisibilityFilters } from '../const'
 import { NavLink } from 'react-router-dom'
 
 const FilterLink = ({
