@@ -3,9 +3,10 @@ import * as actions from '../actions'
 import { VisibilityFilters } from '../const'
 import TodoList from '../components/TodoList'
 import { withRouter } from 'react-router-dom'
-import { getVisibleTodos, getIsFetching } from '../reducers'
+import { getVisibleTodos, getErrorMessage, getIsFetching } from '../reducers'
 import React, { Component } from 'react'
 import Loading from '../components/Loading';
+import FetchError from '../components/FetchError';
 
 
 class VisibleTodoList extends Component {
@@ -25,9 +26,20 @@ class VisibleTodoList extends Component {
     }
 
     render () {
-        const { toggleTodo, isFetching, todos } = this.props
+        const { toggleTodo, isFetching, errorMessage, todos } = this.props
         if (isFetching && !todos.length) {
-            return <Loading />
+            return (
+                <Loading />
+            )
+        }
+
+        if (errorMessage && !todos.length) {
+            return (
+                <FetchError
+                    message={errorMessage}
+                    onRetry={() => this.fetchData()}
+                />
+            )
         }
         return (
             <TodoList 
@@ -42,6 +54,7 @@ const mapStateToProps = (state, { match }) => {
     const filter = match.params.filter || VisibilityFilters.SHOW_ALL
     
     return {
+        errorMessage: getErrorMessage(state, filter),
         todos: getVisibleTodos(state, filter),
         isFetching: getIsFetching(state, filter),
         filter

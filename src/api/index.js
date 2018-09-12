@@ -22,6 +22,9 @@ const delay = (ms) =>
 
 export const fetchTodos = (filter) => {
     return delay(1500).then(() => {
+        if (Math.random() > 0.8) {
+            throw new Error('KABOOM')
+        }
         switch (filter) {
             case VisibilityFilters.SHOW_ALL:
                 return fakeDatabase.todos
@@ -34,3 +37,15 @@ export const fetchTodos = (filter) => {
         }
     })
 }
+
+export const addTodo = (text) => 
+    delay(500)
+        .then(() => {
+            const todo = {
+                id: v4(),
+                text
+                completed: false
+            }
+            fakeDatabase.todos.push(todo)
+            return todo
+        })
