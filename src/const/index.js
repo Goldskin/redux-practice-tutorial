@@ -3,3 +3,21 @@ export const VisibilityFilters = {
     SHOW_COMPLETED: 'completed',
     SHOW_ACTIVE: 'active'
 }
+
+export const FETCH_TODOS = {
+    SUCCESS: 'FETCH_TODOS_SUCCESS',
+    FAILURE: 'FETCH_TODOS_FAILURE',
+    REQUEST: 'FETCH_TODOS_REQUEST'
+}
+
+export const ADD_TODO = {
+    SUCCESS: 'ADD_TODO_SUCCESS',
+    FAILURE: 'ADD_TODO_FAILURE',
+    REQUEST: 'ADD_TODO_REQUEST'
+}
+
+export const TOGGLE_TODO = {
+    SUCCESS: 'TOGGLE_TODO_SUCCESS',
+    FAILURE: 'TOGGLE_TODO_FAILURE',
+    REQUEST: 'TOGGLE_TODO_REQUEST'
+}
