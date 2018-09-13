@@ -3,6 +3,8 @@ import { FETCH_TODOS, ADD_TODO, VisibilityFilters, TOGGLE_TODO } from "../const"
 
 const createList = (filter) => {
     const handleToggle = (state, action) => {
+        console.log('state', state)
+        
         const { result: toggledId, entities} = action.response
         const { completed } = entities.todos[toggledId]
         const shouldRemove = (
