@@ -61,4 +61,5 @@ export const deleteTodo = (id) =>
         const index = fakeDatabase.todos.findIndex(t => t.id === id);
         fakeDatabase.todos.splice(index, 1)
         return fakeDatabase.todos
+        
     })
