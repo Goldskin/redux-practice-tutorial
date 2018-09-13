@@ -38,6 +38,7 @@ export const fetchTodos = (filter) => {
     })
 }
 
+
 export const addTodo = (text) => 
     delay(300).then(() => {
         const todo = {
@@ -61,5 +62,5 @@ export const deleteTodo = (id) =>
         const index = fakeDatabase.todos.findIndex(t => t.id === id);
         fakeDatabase.todos.splice(index, 1)
         return fakeDatabase.todos
-        
+
     })
