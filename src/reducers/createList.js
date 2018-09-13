@@ -2,19 +2,30 @@ import { combineReducers } from "redux";
 import { FETCH_TODOS, ADD_TODO, VisibilityFilters, TOGGLE_TODO } from "../const";
 
 const createList = (filter) => {
+    const handleToggle = (state, action) => {
+        const { result: toggledId, entities} = action.response
+        const { completed } = entities.todos[toggledId]
+        const shouldRemove = (
+            (completed && filter === VisibilityFilters.SHOW_ACTIVE) ||
+            (!completed && filter === VisibilityFilters.SHOW_COMPLETED)
+        )
+        return shouldRemove ?
+            state.filter(id => id !== toggledId) :
+            state
+    }
+
     const ids = (state = [], action) => {
         switch (action.type) {
             case FETCH_TODOS.SUCCESS:
                 return action.filter === filter ?
-                    action.response.map(todo => todo.id) :
+                    action.response.result :
                     state
             case ADD_TODO.SUCCESS:
                 return action.filter !== VisibilityFilters.SHOW_COMPLETED ?
-                    [ ...state, action.response.id ] :
+                    [ ...state, action.response.result ] :
                     state
-
             case TOGGLE_TODO.SUCCESS:
-                return state.filter(id => action.id !== id)
+                return handleToggle(state, action)
             default:
                 return state
         }

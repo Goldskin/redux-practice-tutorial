@@ -1,8 +1,8 @@
 import * as api from '../api'
 import { getIsFetching } from '../reducers'
 import { FETCH_TODOS, ADD_TODO, TOGGLE_TODO } from '../const';
-import { normalize } from 'path';
-
+import { normalize } from "normalizr";
+import * as schema from './schema'
 
 export const fetchTodos = (filter) => (dispatch, getState) => {
     if (getIsFetching(getState(), filter)) {
@@ -19,7 +19,7 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
             dispatch({
                 type: FETCH_TODOS.SUCCESS,
                 filter,
-                response
+                response: normalize(response, schema.arrayOfTodos)
             })
         },
         error => {
@@ -34,11 +34,14 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
 
 
 export const addTodo = text => (dispatch, getState) => {
+    dispatch({
+        type: ADD_TODO.REQUEST
+    })
     return api.addTodo(text).then(
         response => {
             dispatch({
                 type: ADD_TODO.SUCCESS,
-                response
+                response: normalize(response, schema.todo)
             })
         },
         error => {
@@ -52,11 +55,14 @@ export const addTodo = text => (dispatch, getState) => {
 
 
 export const toggleTodo = id => (dispatch, getState) => {
+    dispatch({
+        type: TOGGLE_TODO.REQUEST
+    })
     return api.toggleTodo(id).then(
         response => {
             dispatch({
                 type: TOGGLE_TODO.SUCCESS,
-                id
+                response: normalize(response, schema.todo)
             })
         },
         error => {
