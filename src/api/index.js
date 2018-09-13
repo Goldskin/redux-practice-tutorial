@@ -55,3 +55,10 @@ export const toggleTodo = (id) =>
         todo.completed = !todo.completed
         return todo
     })
+
+export const deleteTodo = (id) =>
+    delay(300).then(() => {
+        const index = fakeDatabase.todos.findIndex(t => t.id === id);
+        fakeDatabase.todos.splice(index, 1)
+        return fakeDatabase.todos
+    })

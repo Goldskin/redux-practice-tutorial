@@ -1,6 +1,6 @@
 import * as api from '../api'
 import { getIsFetching } from '../reducers'
-import { FETCH_TODOS, ADD_TODO, TOGGLE_TODO } from '../const';
+import { FETCH_TODOS, ADD_TODO, TOGGLE_TODO, DELETE_TODO } from '../const';
 import { normalize } from "normalizr";
 import * as schema from './schema'
 
@@ -68,6 +68,26 @@ export const toggleTodo = id => (dispatch, getState) => {
         error => {
             dispatch({
                 type: TOGGLE_TODO.SUCCESS,
+                message: error.message || 'Something went wrong'
+            })
+        }
+    )
+}
+
+export const deleteTodo = id => (dispatch, getState) => {
+    dispatch({
+        type: DELETE_TODO.REQUEST
+    })
+    return api.deleteTodo(id).then(
+        response => {
+            dispatch({
+                type: DELETE_TODO.SUCCESS,
+                response: normalize(response, schema.todo)
+            })
+        },
+        error => {
+            dispatch({
+                type: DELETE_TODO.SUCCESS,
                 message: error.message || 'Something went wrong'
             })
         }
